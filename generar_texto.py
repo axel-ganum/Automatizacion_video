@@ -7,7 +7,7 @@ def generar_texto_huggingface(prompt, max_length=150):
     headers = {"Authorization": "Bearer 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"}
     payload = {
         "inputs": prompt,
-        "parameters": {"max_length": max_length, "temperature": 0.7},
+        "parameters": {"max_length": 50, "temperature": 0.5}
     }
 
     response = requests.post(url, headers=headers, json=payload)
@@ -19,7 +19,7 @@ def generar_texto_huggingface(prompt, max_length=150):
 
 def generar_audio(texto, archivo_salida="audio_ia.mp3"):
     
-    api_url = "https://api.elevenlabs.io/v1/text-to-speech/EXISTING_VOICE_ID"
+    api_url = "https://api.elevenlabs.io/v1/text-to-speech/dlGxemPxFMTY7iXagmOj"
 
     headers = {
         "xi-api-key": "sk_10be862972ad045c8bec7033161028e25a31291b731e8225",
@@ -28,7 +28,7 @@ def generar_audio(texto, archivo_salida="audio_ia.mp3"):
     }
 
     payload = {
-        "texto": texto,
+        "text": texto,
         "voice_settings": {
             "stability": 0.5,
             "similarity_boost": 0.7
