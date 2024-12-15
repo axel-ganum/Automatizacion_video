@@ -17,12 +17,40 @@ def generar_texto_huggingface(prompt, max_length=150):
         return f"Error: {response.status_code}, {response.text}"
 
 
-def generar_audio(texto, archivo_salida="audio.mp3"):
-    tts = gTTS(text=texto, lang='es')
-    tts.save(archivo_salida)
-    print(f"Audio generado: {archivo_salida}")
+def generar_audio(texto, archivo_salida="audio_ia.mp3"):
+    
+    api_url = "https://api.elevenlabs.io/v1/text-to-speech/EXISTING_VOICE_ID"
+
+    headers = {
+        "xi-api-key": "sk_10be862972ad045c8bec7033161028e25a31291b731e8225",
+        "Content-Type": "application/json",
+ 
+    }
+
+    payload = {
+        "texto": texto,
+        "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.7
+        }
+    }
 
 
+    response = requests.post(api_url, headers=headers, json=payload)
+
+    if response.status_code ==200:
+
+        with open(archivo_salida, "wb") as f:
+            f.write(response.content)
+        print(f"Audio generado y guardado en: {archivo_salida}")
+
+    else:
+        print(f"Error: {response.status_code}, {response.text}")
+  
+
+
+
+  
 if __name__=="__main__":
     tema = input("Escribe el tema inicial para el video: ")
     texto_generado= generar_texto_huggingface(tema)
